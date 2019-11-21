@@ -1,9 +1,34 @@
 import React from 'react'
 import MenuBar from '../components/MenuBar.js'
-import { Profile, Photos, Cocktails, Pokemon} from '../components/Pages.js'
+import { Profile, Photos, Cocktails, Pokemon } from '../components/Pages.js'
 
 class MainBox extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      activeItem: ''
+    }
+  }
 
+  handleItemClick = (event) => {
+    this.setState({
+      activeItem: event.target.id
+    })
+  }
+
+  whichComponent = (item) => {
+    // to make this neater I could refactor it into a case statement
+
+    if (item === 'profile') {
+      return <Profile />
+    } else if (item === 'photo') {
+      return <Photos />
+    } else if (item === 'cocktail') {
+      return <Cocktails />
+    } else {
+      return <Pokemon />
+    }
+  }
 
   render() {
 
@@ -17,8 +42,8 @@ class MainBox extends React.Component {
 
     return (
       <div>
-        <MenuBar />
-        {detailsToDisplay}
+        <MenuBar handleItemClick={this.handleItemClick} />
+        {this.whichComponent(this.state.activeItem)}
       </div>
     )
   }
